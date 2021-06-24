@@ -1,4 +1,4 @@
-# scrapabill
+# Scrapabill
 
 A new Flutter project.
 
