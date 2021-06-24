@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:scrapabill/services/navigation_service.dart';
+import 'package:scrapabill/state_manager/state.dart';
+import 'package:scrapabill/state_manager/store.dart';
+import 'package:scrapabill/views/styles/k_colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,13 +12,30 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Scrapabill',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return StoreProvider<AppState>(
+      store: store,
+      child: StoreConnector<AppState, AppState>(
+        converter: (store) => store.state,
+        builder: (context, items) {
+          return MaterialApp(
+            title: 'Scrapabill',
+            debugShowCheckedModeBanner: false,
+            navigatorKey: NavigationService.navigatorKey,
+            theme: ThemeData(
+              appBarTheme: Theme.of(context)
+                  .appBarTheme
+                  .copyWith(brightness: Brightness.light),
+              pageTransitionsTheme: PageTransitionsTheme(builders: {
+                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              }),
+              primaryColor: KColor.primaryColor,
+              accentColor: KColor.primaryColor,
+            ),
+            home: MyHomePage(title: 'Flutter Demo Home Page'),
+          );
+        },
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
