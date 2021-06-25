@@ -1,4 +1,4 @@
-# Scrapabill
+# FlutterReduxAppBoilerPlate
 
 A new Flutter project.
 
